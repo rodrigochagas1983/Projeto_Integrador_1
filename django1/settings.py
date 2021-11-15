@@ -80,13 +80,29 @@ WSGI_APPLICATION = 'django1.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
+'''DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+'''
 
+'''Configurado MySQL como Banco de Dados Padrão a ser usado na Aplicação Django'''
+DATABASES = {
+
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'db_Consulta_Paciente',
+        'USER': 'root',
+        'PASSWORD': 'macgyver',
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
+        'OPTIONS': {
+            'read_default_file': '/etc/mysql/my.cnf',
+        }
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -124,7 +140,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'  # usado durante o desenvolvimento
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # usado durante a produção
+# STATIC_URL = '/static/'  # usado durante o desenvolvimento
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # usado durante a produção
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 LOGOUT_REDIRECT_URL = 'index'
