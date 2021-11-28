@@ -1,0 +1,110 @@
+<!-- {% load static %} Ler os arquivos estaticos para formatação da pagina -->
+{% load static %}
+{% load bootstrap4 %} <!-- carrega arquivos de formatação do Bootstrap -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <!-- <link rel="stylesheet" href="{% static 'css/estilos.css' %}"> Para carregar o CSS na pagina dos arquivos estaticos -->
+    {% bootstrap_css %}  <!-- carrega arquivos de formatação CSS do Bootstrap -->
+
+    </head>
+    <body>
+        <div class="container">
+
+        <h1>Cadastro Geral de Consultas de Pacientes do Vale do Paraíba</h1>
+        <br>
+        <br>
+        <h3>Usuário Logado: {{ user }} </h3>
+
+    {% buttons %}
+            <button onclick="window.location.href = 'http://127.0.0.1:8000/admin'" class="btn btn-primary">Login</button> <!-- Botão do Bootstrap -->
+    {% endbuttons %}
+        <br>
+        <br>
+    <h4>Navegue até no serviço que deseja.</h4>
+    <select id="link">
+
+       <option value="" selected>Faça sua Escolha</option>
+       <option value="http://127.0.0.1:8000/paciente">Cadastro de Pacientes</option>
+       <option value="http://127.0.0.1:8000/agenda">Agendamento de Consultas</option>
+
+    </select>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <script>
+     $(document).ready(function(){
+
+        $('#link').on('change', function () {
+             var url = $(this).val();
+             if (url) {
+                 window.open(url, '_blank');
+              }
+              return false;
+            });
+         });
+    </script>
+
+    {% bootstrap_messages %}
+        <form action="" method="post" class="form" autocomplete="off">
+
+            {% csrf_token %}
+
+            <!-- <img src="{% static 'images/imagem_teste.jpg' %}"/> CARREGA IMAGEM PARA DENTRO DA PAGINA -->
+            <br>
+            <br>
+            <h2>{{ curso }}</h2>  <!-- variavel definida em context no 'views' no método 'index' para dentro da pagina HTML -->
+
+            <h2>{{ medico }}</h2>
+
+            <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Sobrenome</th>
+                        <th>E-mail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for medic in medicos %}
+                    <tr>
+                        <td><a href="{% url 'contato' %}">{{ medic.nome }}</a></td>
+                        <td>{{ medic.sobrenome }}</td>
+                        <td>{{ medic.email }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+            <!-- {% buttons %}
+                <button type="submit" class="btn btn-primary">Enviar Mensagem</button>  Botão do Bootstrap
+            {% endbuttons %} -->
+        </form>
+
+    <!-- <button onclick="teste();">Clique-me</button> Carrega Funcçao do Java estatico ao apertar o botao -->
+    <!-- <script type="text/javascript" src="{% static 'js/script.js' %}"></script>  Carrega JavaScript dentro da pagina -->
+        <br>
+        <br>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+          <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+        </div>
+
+    {% bootstrap_javascript jquery='full' %} <!-- carrega arquivos de formatação Java do Bootstrap -->
+</body>
+</html>
